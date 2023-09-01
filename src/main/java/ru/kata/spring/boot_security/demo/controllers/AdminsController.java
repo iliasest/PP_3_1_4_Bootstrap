@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
+import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.security.Principal;
@@ -16,12 +16,13 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminsController {
     private final UserService userService;
-    private final RoleRepository roleRepository;
+
+    private final RoleService roleService;
 
     @Autowired
-    public AdminsController(UserService userService, RoleRepository roleRepository) {
+    public AdminsController(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -38,7 +39,7 @@ public class AdminsController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("new");
 
-        List<Role> roles = roleRepository.findAll();
+        List<Role> roles = roleService.getAllRoles();
         modelAndView.addObject("allRoles", roles);
 
         return modelAndView;
@@ -63,7 +64,7 @@ public class AdminsController {
         User user = userService.getUserById(id);
         modelAndView.addObject("user", user);
 
-        List<Role> roles = roleRepository.findAll();
+        List<Role> roles = roleService.getAllRoles();
         modelAndView.addObject("allRoles", roles);
 
         return modelAndView;
