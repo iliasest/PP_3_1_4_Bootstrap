@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>New User</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
 Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
@@ -12,14 +13,14 @@ Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
     <input type="submit" value="Logout"/>
 </form>
 <form th:method="POST" th:action="@{/admin/}" th:object="${user}">
-  <div class="form-group">
-    <label for="name">User name</label>
-    <input type="text" th:field="*{username}" class="form-control" id="name" placeholder="Enter name">
-  </div>
-  <div class="form-group">
-    <label for="age">User age</label>
-    <input type="number" th:field="*{age}" class="form-control" id="age" placeholder="Enter age">
-  </div>
+    <div class="form-group">
+        <label for="name">User name</label>
+        <input type="text" th:field="*{username}" class="form-control" id="name" placeholder="Enter name">
+    </div>
+    <div class="form-group">
+        <label for="age">User age</label>
+        <input type="number" th:field="*{age}" class="form-control" id="age" placeholder="Enter age">
+    </div>
     <div class="form-group">
         <label for="password">User password</label>
         <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Enter password">
@@ -34,7 +35,7 @@ Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
             />
         </label>
     </p>
-  <button type="submit" class="btn btn-primary">Add user</button>
+    <button type="submit" class="btn btn-primary">Add user</button>
 </form>
 </body>
 </html>

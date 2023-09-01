@@ -9,12 +9,12 @@ import javax.persistence.*;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @Column(name = "name")
     private String name;
 
-    public Role() {}
+    public Role() {
+    }
 
     public Role(String name) {
         this.name = name;
@@ -38,15 +38,10 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return this.name;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     @Override
@@ -58,10 +53,10 @@ public class Role implements GrantedAuthority {
         if (getClass() != obj.getClass())
             return false;
         Role other = (Role) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (id == 0) {
+            if (other.id != 0)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!(id == other.id))
             return false;
         return true;
     }

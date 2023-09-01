@@ -7,21 +7,14 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminsController {
-//    @GetMapping
-//    public String admin() {
-//        return "admin";
-//    }
     private final UserService userService;
     private final RoleRepository roleRepository;
 
@@ -40,23 +33,13 @@ public class AdminsController {
         return modelAndView;
     }
 
-//    @GetMapping("/{id}")
-//    public ModelAndView showUser(@PathVariable("id") int id) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("user", userService.getUserById(id));
-//        modelAndView.setViewName("/show");
-//        return modelAndView;
-//    }
-
     @GetMapping("/new")
     public ModelAndView addUser(@ModelAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("new");
 
-        ////
         List<Role> roles = roleRepository.findAll();
         modelAndView.addObject("allRoles", roles);
-        ////
 
         return modelAndView;
     }
@@ -77,15 +60,11 @@ public class AdminsController {
         modelAndView.setViewName("edit");
         modelAndView.addObject("user", userService.getUserById(id));
 
-
-        ////
         User user = userService.getUserById(id);
         modelAndView.addObject("user", user);
 
         List<Role> roles = roleRepository.findAll();
         modelAndView.addObject("allRoles", roles);
-        ////
-
 
         return modelAndView;
     }
@@ -95,7 +74,7 @@ public class AdminsController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/admin/");
 
-        userService.edit(user);
+        userService.add(user);
 
         return modelAndView;
     }
