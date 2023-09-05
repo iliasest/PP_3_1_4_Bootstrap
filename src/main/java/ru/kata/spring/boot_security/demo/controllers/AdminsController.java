@@ -27,20 +27,27 @@ public class AdminsController {
 
     @GetMapping
     public ModelAndView getUsers(Principal principal) {
+        User user = userService.findByUsername(principal.getName());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");
         modelAndView.addObject("usersList", userService.getUsers());
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("allRoles", roleService.getAllRoles());
 
         return modelAndView;
     }
 
     @GetMapping("/new")
-    public ModelAndView addUser(@ModelAttribute("user") User user) {
+    public ModelAndView addUser(@ModelAttribute("user") User user, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("new");
+        modelAndView.setViewName("new_user");
 
         List<Role> roles = roleService.getAllRoles();
         modelAndView.addObject("allRoles", roles);
+        User userItem = userService.findByUsername(principal.getName());
+        modelAndView.addObject("usersList", userService.getUsers());
+        modelAndView.addObject("user", userItem);
+
 
         return modelAndView;
     }
@@ -51,21 +58,6 @@ public class AdminsController {
         modelAndView.setViewName("redirect:/admin/");
 
         userService.add(user);
-
-        return modelAndView;
-    }
-
-    @GetMapping("/{id}/edit")
-    public ModelAndView editUser(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("edit");
-        modelAndView.addObject("user", userService.getUserById(id));
-
-        User user = userService.getUserById(id);
-        modelAndView.addObject("user", user);
-
-        List<Role> roles = roleService.getAllRoles();
-        modelAndView.addObject("allRoles", roles);
 
         return modelAndView;
     }

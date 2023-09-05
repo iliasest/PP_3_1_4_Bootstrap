@@ -19,6 +19,10 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
 
+    private String firstName;
+
+    private String lastName;
+
     private String password;
 
     private int age;
@@ -33,13 +37,23 @@ public class User implements UserDetails {
         this.roles.add(role);
     }
 
+    public String getFormattedRoles() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Role role : getRoles()) {
+            stringBuilder.append(role.getName().split("_")[1]).append(" ");
+        }
+        return stringBuilder.toString();
+    }
+
     public User() {
     }
 
-    public User(String name, int age, String password) {
-        this.username = name;
+    public User(String username, String firstName, String lastName, int age, String password) {
+        this.username = username;
         this.age = age;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public int getId() {
@@ -74,8 +88,8 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String name) {
-        this.username = name;
+    public void setUsername(String email) {
+        this.username = email;
     }
 
     public int getAge() {
@@ -108,5 +122,19 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

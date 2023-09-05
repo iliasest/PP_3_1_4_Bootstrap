@@ -19,9 +19,9 @@ public class TableService implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        User admin = new User("admin",
+        User admin = new User("admin@mail.ru", "admin", "adminov",
                 20, "admin");
-        User user = new User("user",
+        User user = new User("user@mail.ru", "user", "userov",
                 15, "user");
         Role userRole = new Role("ROLE_USER");
         Role adminRole = new Role("ROLE_ADMIN");

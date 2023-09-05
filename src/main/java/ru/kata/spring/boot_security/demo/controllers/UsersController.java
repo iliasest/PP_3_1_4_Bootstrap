@@ -22,7 +22,7 @@ public class UsersController {
     @GetMapping
     public ModelAndView getUser(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user");
+        modelAndView.setViewName("userpage");
         modelAndView.addObject("user", userService.findByUsername(principal.getName()));
 
         return modelAndView;
