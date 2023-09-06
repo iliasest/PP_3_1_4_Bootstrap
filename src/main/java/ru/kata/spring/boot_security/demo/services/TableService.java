@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 
+import java.util.Collections;
+import java.util.HashSet;
+
 @Component
 public class TableService implements CommandLineRunner {
     private final UserService userService;
@@ -29,8 +32,8 @@ public class TableService implements CommandLineRunner {
         roleService.saveRole(userRole);
         roleService.saveRole(adminRole);
 
-        admin.addRole(adminRole);
-        user.addRole(userRole);
+        admin.setRoles(new HashSet<>(Collections.singleton(adminRole)));
+        user.setRoles(new HashSet<>(Collections.singleton(userRole)));
 
         userService.add(admin);
         userService.add(user);

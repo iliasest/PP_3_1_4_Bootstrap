@@ -15,6 +15,7 @@
             display: block;
             margin: 0 auto;
         }
+
         html, body {
             height: 100%;
         }
@@ -36,6 +37,7 @@
             padding-top: 10px;
             padding-bottom: 10px;
         }
+
         nav span {
             float: left;
         }
@@ -44,7 +46,7 @@
 <body>
 <nav class="navbar navbar-text navbar-dark bg-dark">
     <span style="color: aliceblue; font-weight: bold; margin-left: 20px"
-          th:text="${user.getUsername() + ' with roles: ' + user.getFormattedRoles()}"></span>
+          th:text="${auth_user.getUsername() + ' with roles: ' + auth_user.getFormattedRoles()}"></span>
     <form th:action="@{/logout}" method="POST">
         <input style="color: darkgray; background-color: #212529; border: 0; margin-right: 20px" type="submit"
                value="Logout"/>
@@ -66,12 +68,16 @@
     <div class="bg-light full-height full-width" style="padding-left: 35px; padding-top: 20px">
         <h1 style="margin-bottom: 15px">Admin panel</h1>
         <div style="margin-right: 30px">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Users table</a>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">Users table
+                    </button>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/new">New User</a>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">New user
+                    </button>
                 </li>
             </ul>
             <div class="border">
@@ -79,10 +85,8 @@
                     <h4>All users</h4>
                 </div>
                 <div style="padding: 20px; background-color: white; border-bottom: 0">
-                    <div class="tab-content border-top" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                             aria-labelledby="v-pills-home-tab"
-                             tabindex="0">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -203,11 +207,11 @@
                                                                            class="form-control" id="password">
                                                                 </div>
                                                                 <div style="text-align: center" class="mb-3">
-                                                                    <label for="exampleFormControlSelect2"><b>Role</b></label>
+                                                                    <label for="exampleFormControlSelect3"><b>Role</b></label>
                                                                     <select th:name="roles" style="height: 70px"
                                                                             multiple
                                                                             class="form-control"
-                                                                            id="exampleFormControlSelect2">
+                                                                            id="exampleFormControlSelect3">
                                                                         <option th:each="role : ${allRoles}"
                                                                                 th:selected="${role.getName()}"
                                                                                 th:value="${role.getId()}"
@@ -328,6 +332,54 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"
+                                 style="text-align: center">
+                                <form style="width: 400px; display: inline-block" th:method="POST"
+                                      th:action="@{/admin/}"
+                                      th:object="${user}">
+                                    <div class="form-group" style="margin-bottom: 20px">
+                                        <label for="fName"><b>First name</b></label>
+                                        <input type="text" th:field="*{firstName}"
+                                               class="form-control" id="fName"
+                                               placeholder="Enter first name">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 20px">
+                                        <label for="fName"><b>Last name</b></label>
+                                        <input type="text" th:field="*{lastName}" class="form-control" id="lName"
+                                               placeholder="Enter last name">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 20px">
+                                        <label for="agee"><b>Age</b></label>
+                                        <input type="number" th:field="*{age}" class="form-control" id="agee"
+                                               placeholder="Enter age">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 20px">
+                                        <label for="e-mail"><b>Email</b></label>
+                                        <input type="email" th:field="*{username}" class="form-control" id="e-mail"
+                                               placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 20px">
+                                        <label for="passwordd"><b>Password</b></label>
+                                        <input type="password" th:field="*{password}" class="form-control"
+                                               id="passwordd"
+                                               placeholder="Enter password">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 20px">
+                                        <label for="exampleFormControlSelect2"><b>Role</b></label>
+                                        <select th:field="*{roles}" style="height: 70px" multiple class="form-control"
+                                                id="exampleFormControlSelect2">
+                                            <option th:each="role : ${allRoles}"
+                                                    th:text="${role}"
+                                                    th:value="${role.id}"
+                                                    th:field="*{roles}"></option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success">Add new user</button>
+                                </form>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
                              aria-labelledby="v-pills-profile-tab"
